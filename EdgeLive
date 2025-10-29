@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edge Live Player</title>
+<style>
+  body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+  }
+  video {
+    width: 100%;
+    height: 95vh;
+    background: #000;
+  }
+</style>
+</head>
+<body>
+<h2>🎬 Edge Live Player</h2>
+<video id="player" controls autoplay></video>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const m3u8Url = urlParams.get('m3u8');
+
+  if (Hls.isSupported()) {
+    const video = document.getElementById('player');
+    const hls = new Hls();
+    hls.loadSource(m3u8Url);
+    hls.attachMedia(video);
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = m3u8Url;
+  }
+</script>
+
+<!-- Include hls.js -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</body>
+</html>
